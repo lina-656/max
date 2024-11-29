@@ -1,82 +1,78 @@
+import random
+
 class Matrix:
     def __init__(self, size):
-        self.text = text
-        pass  # "образец"
+        self.size = size
+        self.matrix = []
 
     def input_matrix(self):
-         n = int(input("Введите размер матрицы (n x n): "))
-         matrix = []
-         print("Введите элементы матрицы (через пробел):")
-    for i in range(n):
-        row = list(map(int, input(f"Строка {i + 1}: ").split()))
-        matrix.append(row)
-        return matrix
-        pass  # "образец"
+        print("Введите элементы матрицы (через пробел):")
+        for i in range(self.size):
+            row = list(map(int, input(f"Строка {i + 1}: ").split()))
+            self.matrix.append(row)
 
     def generate_random_matrix(self):
-        return [[random.randint(1, 100) for _ in range(size)] for _ in range(size)]
-        pass  # "образец"
+        self.matrix = [[random.randint(1, 100) for _ in range(self.size)] for _ in range(self.size)]
 
     def swap_rows_and_columns(self):
-       min_row_index = None
-       max_col_index = None
-       min_value = float('inf')
-       max_value = float('-inf')
-        # Поиск минимального элемента и максимального элемента
-    for i in range(len(matrix)):
-        for j in range(len(matrix[i])):
-            if matrix[i][j] < min_value:
-                min_value = matrix[i][j]
-                min_row_index = i
-            if matrix[i][j] > max_value:
-                max_value = matrix[i][j]
-                max_col_index = j
-                
-    # Замена местами строки и столбца
-    if min_row_index is not None and max_col_index is not None:
-        for i in range(len(matrix)):
-            # Смена строки с минимальным элементом на соответствующий столбец
-            matrix[min_row_index][i], matrix[i][max_col_index] = matrix[i][max_col_index], matrix[min_row_index][i] 
-        pass  # "образец"
+        min_row_index = None
+        max_col_index = None
+        min_value = float('inf')
+        max_value = float('-inf')
+
+        for i in range(len(self.matrix)):
+            for j in range(len(self.matrix[i])):
+                if self.matrix[i][j] < min_value:
+                    min_value = self.matrix[i][j]
+                    min_row_index = i
+                if self.matrix[i][j] > max_value:
+                    max_value = self.matrix[i][j]
+                    max_col_index = j
+                    
+        if min_row_index is not None and max_col_index is not None:
+            for i in range(len(self.matrix)):
+                self.matrix[min_row_index][i], self.matrix[i][max_col_index] = self.matrix[i][max_col_index], self.matrix[min_row_index][i]
 
     def display_matrix(self):
-     for row in matrix:
-        print(" ".join(map(str, row)))
-        pass  # "образец"
+        for row in self.matrix:
+            print(" ".join(map(str, row)))
 
 class Menu:
     def print_menu(self):
-    print("\nМеню:")
-    print("1. Ввод исходных данных вручную")
-    print("2. Генерация случайной матрицы")
-    print("3. Выполнение алгоритма")
-    print("4. Вывод результата")
-    print("5. Завершение работы программы")
-        pass  # "образец"
+        print("\nМеню:")
+        print("1. Ввод исходных данных вручную")
+        print("2. Генерация случайной матрицы")
+        print("3. Выполнение алгоритма")
+        print("4. Вывод результата")
+        print("5. Завершение работы программы")
 
 def main():
-     matrix = None
+    matrix = None
+    menu = Menu()
     
     while True:
-        print_menu()
+        menu.print_menu()
         choice = input("Выберите пункт меню: ")
 
         if choice == '1':
-            matrix = input_matrix()
+            n = int(input("Введите размер матрицы (n x n): "))
+            matrix = Matrix(n)
+            matrix.input_matrix()
         elif choice == '2':
-            size = int(input("Введите размер матрицы (n x n): "))
-            matrix = generate_random_matrix(size)
+            n = int(input("Введите размер матрицы (n x n): "))
+            matrix = Matrix(n)
+            matrix.generate_random_matrix()
             print("Сгенерированная матрица:")
-            display_matrix(matrix)
+            matrix.display_matrix()
         elif choice == '3':
             if matrix is not None:
-                swap_rows_and_columns(matrix)
+                matrix.swap_rows_and_columns()
                 print("Алгоритм выполнен.")
             else:
                 print("Сначала введите данные.")
         elif choice == '4':
             if matrix is not None:
-                display_matrix(matrix)
+                matrix.display_matrix()
             else:
                 print("Сначала введите данные.")
         elif choice == '5':
@@ -84,7 +80,6 @@ def main():
             break
         else:
             print("Неверный выбор.")
-    pass  # "образец"
 
 if __name__ == "__main__":
     main()
